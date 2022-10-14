@@ -20,13 +20,6 @@ suspend fun switchPerm(context: CommandContext) {
         })
         return
     }
-    if (!perm.allow) {
-        context.sender.sendMessage(buildMessageChain {
-            +QuoteReply(context.originalMessage)
-            +PlainText("本群已被禁止使用AI绘图，无法切换")
-        })
-        return
-    }
     if (perm.admin) {
         if (switchGroupPerm(context.sender.getGroupOrNull()!!.id)) {
             context.sender.sendMessage(buildMessageChain {
