@@ -38,11 +38,11 @@ fun initConfig() {
         logger.info { "sampler 数值错误已还原默认值 k_euler_ancestral" }
         sampler = "k_euler_ancestral"
     }
-    if (!((width > 0) && ((width and (width - 1)) == 0) && width >= 64 && width <= 1024)) {
+    if (width % 64 != 0 || width < 64 || width > 1024) {
         logger.info { "width 数值错误已还原默认值 512" }
         width = 512
     }
-    if (!((height > 0) && ((height and (height - 1)) == 0) && height >= 64 && height <= 1024)) {
+    if (height % 64 != 0 || height < 64 || height > 1024) {
         logger.info { "height 数值错误已还原默认值 512" }
         height = 512
     }

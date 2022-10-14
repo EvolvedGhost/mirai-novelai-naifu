@@ -44,10 +44,10 @@ object MiraiNovelaiNaifuConfig : AutoSavePluginConfig("AiConfig") {
     @ValueDescription("强制屏蔽的用户输入标签")
     var bannedContent: MutableList<String> by value(mutableListOf("nsfw", "naked", "r18"))
 
-    @ValueDescription("图片宽，必须为2的次方，范围[64,1024]")
+    @ValueDescription("图片宽，必须64的倍数，范围[64,1024]")
     var width: Int by value(512)
 
-    @ValueDescription("图片高，必须为2的次方，范围[64,1024]")
+    @ValueDescription("图片高，必须64的倍数，范围[64,1024]")
     var height: Int by value(512)
 
     @ValueDescription("出图数量，范围[1,100]")
