@@ -12,6 +12,13 @@ suspend fun text2img(cc: CommandContext, tags: Array<out String>) {
         cc.sender.sendMessage("不允许终端执行该命令")
         return
     }
+    if (!checkPermission(cc.sender).allow) {
+        cc.sender.sendMessage(buildMessageChain {
+            +QuoteReply(cc.originalMessage)
+            +PlainText("本群当前不允许AI绘图")
+        })
+        return
+    }
     val keywords = tags.joinToString(" ")
     val banWord = checkBannedWords(keywords)
     if (banWord != null) {

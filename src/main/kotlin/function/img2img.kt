@@ -12,6 +12,13 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>) {
         cc.sender.sendMessage("不允许终端执行该命令")
         return
     }
+    if (!checkPermission(cc.sender).allow) {
+        cc.sender.sendMessage(buildMessageChain {
+            +QuoteReply(cc.originalMessage)
+            +PlainText("本群当前不允许AI绘图")
+        })
+        return
+    }
     var keywords = tags.joinToString(" ")
     keywords = keywords.replace("[图片]", "")
     keywords = keywords.replace("[动画表情]", "")
