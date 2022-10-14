@@ -30,7 +30,7 @@ fun checkPermission(cs: CommandSender): Permit {
     if (cs is GroupAwareCommandSender) {
         val group = cs.group
         val target = group.members[cs.user.id]
-        return if (groupAllow || whiteList.contains(group.id)) {
+        return if ((groupAllow || whiteList.contains(group.id)) && checkGroupPerm(group.id)) {
             Permit(
                 allow = true,
                 admin = adminSuper.contains(cs.user.id) || (adminMode && target?.isOperator() == true),
