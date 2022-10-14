@@ -14,6 +14,7 @@ data class Permit(
     val allow: Boolean,
     val admin: Boolean,
     val group: Boolean,
+    val banned: Boolean,
 )
 
 fun switchGroupPerm(id: Long): Boolean {
@@ -34,20 +35,22 @@ fun checkPermission(cs: CommandSender): Permit {
             Permit(
                 allow = true,
                 admin = adminSuper.contains(cs.user.id) || (adminMode && target?.isOperator() == true),
-                group = true
+                group = true,
+                banned = false,
             )
         } else {
             Permit(
                 allow = false,
                 admin = adminSuper.contains(cs.user.id) || (adminMode && target?.isOperator() == true),
-                group = true
+                group = true,
+                banned = !(groupAllow || whiteList.contains(group.id)),
             )
         }
     } else {
         return if (!personalAllow && !whiteList.contains(cs.user?.id)) {
-            Permit(allow = false, admin = false, group = false)
+            Permit(allow = false, admin = false, group = false, banned = true)
         } else {
-            Permit(allow = true, admin = false, group = false)
+            Permit(allow = true, admin = false, group = false, banned = false)
         }
     }
 }
