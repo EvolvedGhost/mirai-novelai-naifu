@@ -6,9 +6,14 @@ import com.evolvedghost.MiraiNovelaiNaifuConfig.groupAllow
 import com.evolvedghost.MiraiNovelaiNaifuConfig.personalAllow
 import com.evolvedghost.MiraiNovelaiNaifuConfig.whiteList
 import com.evolvedghost.MiraiNovelaiNaifuData.groupPerm
+import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.console.command.CommandSender
 import net.mamoe.mirai.console.command.GroupAwareCommandSender
+import net.mamoe.mirai.console.command.isConsole
 import net.mamoe.mirai.contact.isOperator
+import net.mamoe.mirai.message.data.PlainText
+import net.mamoe.mirai.message.data.QuoteReply
+import net.mamoe.mirai.message.data.buildMessageChain
 
 data class Permit(
     val allow: Boolean,
@@ -17,10 +22,19 @@ data class Permit(
     val banned: Boolean,
 )
 
-fun switchGroupPerm(id: Long): Boolean {
-    val flag = !checkGroupPerm(id)
-    groupPerm[id] = flag
-    return flag
+suspend fun checkCommandInvalid(cc: CommandContext): Boolean {
+    if (cc.sender.isConsole()) {
+        cc.sender.sendMessage("不允许终端执行该命令")
+        return true
+    }
+    if (!checkPermission(cc.sender).allow) {
+        cc.sender.sendMessage(buildMessageChain {
+            +QuoteReply(cc.originalMessage)
+            +PlainText("本群当前不允许AI绘图")
+        })
+        return true
+    }
+    return false
 }
 
 fun checkGroupPerm(id: Long): Boolean {

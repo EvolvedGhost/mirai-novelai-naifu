@@ -1,5 +1,6 @@
 package com.evolvedghost.function
 
+import com.evolvedghost.MiraiNovelaiNaifuData
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.console.command.getGroupOrNull
 import net.mamoe.mirai.console.command.isConsole
@@ -45,4 +46,10 @@ suspend fun switchPerm(context: CommandContext) {
             +PlainText("你没有开关的权限")
         })
     }
+}
+
+fun switchGroupPerm(id: Long): Boolean {
+    val flag = !checkGroupPerm(id)
+    MiraiNovelaiNaifuData.groupPerm[id] = flag
+    return flag
 }
