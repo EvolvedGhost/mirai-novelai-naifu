@@ -20,7 +20,7 @@ suspend fun switchPerm(context: CommandContext) {
         })
         return
     }
-    if (!perm.banned) {
+    if (perm.banned) {
         context.sender.sendMessage(buildMessageChain {
             +QuoteReply(context.originalMessage)
             +PlainText("本群已被禁止使用AI绘图，无法切换")
