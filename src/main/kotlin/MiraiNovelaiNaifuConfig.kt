@@ -23,6 +23,9 @@ object MiraiNovelaiNaifuConfig : AutoSavePluginConfig("AiConfig") {
     @ValueDescription("当前两者关闭后在该名单的仍可使用（群号QQ号均可）")
     var whiteList: MutableList<Long> by value(mutableListOf())
 
+    @ValueDescription("图片等待事件（秒）（方便手机用户以图生图）")
+    var imageWaitTime: Int by value(60)
+
     @ValueDescription("Api访问地址")
     var apiSrc: String by value("http://127.0.0.1:6969/")
 

@@ -17,6 +17,10 @@ suspend fun text2img(cc: CommandContext, tags: Array<out String>) {
         })
         return
     }
+    cc.sender.sendMessage(buildMessageChain {
+        +QuoteReply(cc.originalMessage)
+        +PlainText("请稍后正在处理中")
+    })
     val ai = Naifu(keywords)
     val value = ai.text2image()
     sendImg(cc, value)

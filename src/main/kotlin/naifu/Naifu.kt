@@ -85,8 +85,6 @@ class Naifu() {
 
     suspend fun image2image(image: Image): ReturnVal {
         return try {
-            //构建url地址
-            println(image.queryUrl())
             val img = HTTPClient(image.queryUrl(), connectTimeout, readTimeout, ignoreCertError).get().body?.bytes()
                 ?: return ReturnVal(false, mutableListOf(), "原图片错误或下载失败")
             val url = apiSrc + "generate-stream"
