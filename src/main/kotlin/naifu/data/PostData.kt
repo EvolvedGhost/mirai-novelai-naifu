@@ -12,7 +12,7 @@ data class PostData(
     val steps: Int,
     val seed: Long,
     val n_samples: Int,
-    val image: String?,
-    val noise: Float?,
-    val strength: Float?
+    var image: String?,
+    var noise: Float?,
+    var strength: Float?
 )

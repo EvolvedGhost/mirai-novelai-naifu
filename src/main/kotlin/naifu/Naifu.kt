@@ -96,23 +96,23 @@ class Naifu() {
             } else {
                 seed
             }
-            val jsonString = gson.toJson(
-                PostData(
-                    prompt = additionalPrompt + tags,
-                    uc = undesiredContent,
-                    width = width,
-                    height = height,
-                    scale = scale,
-                    sampler = sampler,
-                    steps = steps,
-                    seed = newSeed,
-                    n_samples = samples,
-                    image = Base64.getEncoder().encodeToString(img),
-                    strength = strength,
-                    noise = noise
-                )
+            val data = PostData(
+                prompt = additionalPrompt + tags,
+                uc = undesiredContent,
+                width = width,
+                height = height,
+                scale = scale,
+                sampler = sampler,
+                steps = steps,
+                seed = newSeed,
+                n_samples = samples,
+                image = null,
+                strength = strength,
+                noise = noise
             )
-            DebugMode().logText("请求的Json字段为：$jsonString")
+            data.image = Base64.getEncoder().encodeToString(img)
+            DebugMode().logPostData(data)
+            val jsonString = gson.toJson(data)
             getReturnVal(url, jsonString)
         } catch (e: Exception) {
             DebugMode().logException(e)

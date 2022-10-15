@@ -2,6 +2,8 @@ package com.evolvedghost.utils
 
 import com.evolvedghost.MiraiNovelaiNaifu.logger
 import com.evolvedghost.MiraiNovelaiNaifuConfig.debug
+import com.evolvedghost.naifu.data.PostData
+import com.google.gson.GsonBuilder
 import net.mamoe.mirai.utils.info
 
 class DebugMode {
@@ -14,6 +16,12 @@ class DebugMode {
     fun logException(e: Exception) {
         if (debug) {
             e.printStackTrace()
+        }
+    }
+
+    fun logPostData(d: PostData) {
+        if (debug) {
+            logger.info { "Post请求Json字段不含Image：" + GsonBuilder().create().toJson(d) }
         }
     }
 }
