@@ -110,8 +110,8 @@ class Naifu() {
                 strength = strength,
                 noise = noise
             )
-            data.image = Base64.getEncoder().encodeToString(img)
             DebugMode().logPostData(data)
+            data.image = Base64.getEncoder().encodeToString(img)
             val jsonString = gson.toJson(data)
             getReturnVal(url, jsonString)
         } catch (e: Exception) {
