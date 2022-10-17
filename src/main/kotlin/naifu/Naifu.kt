@@ -55,7 +55,7 @@ class Naifu() {
             val gson = GsonBuilder().create()
             val newSeed = if (seed == -1L) {
                 val random = SecureRandom()
-                random.nextLong() % 4294967296
+                random.nextInt().toLong() + 2147483648
             } else {
                 seed
             }
@@ -92,7 +92,7 @@ class Naifu() {
             val gson = GsonBuilder().create()
             val newSeed = if (seed == -1L) {
                 val random = SecureRandom()
-                random.nextLong() % 4294967296
+                random.nextInt().toLong() + 2147483648
             } else {
                 seed
             }
