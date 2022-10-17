@@ -71,19 +71,27 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
     val data = img2imgWaitMapLock.withLock {
         img2imgWaitMap.remove(key)
     } ?: return
-    val originImage = event.message.find { it is Image } as Image?
-    if (originImage == null) {
+    if (startDraw(event.toCommandSender())) {
+        val originImage = event.message.find { it is Image } as Image?
+        if (originImage == null) {
+            sender.sendMessage(buildMessageChain {
+                +QuoteReply(event.message)
+                +PlainText("未识别到图片")
+            })
+            return
+        }
         sender.sendMessage(buildMessageChain {
             +QuoteReply(event.message)
-            +PlainText("未识别到图片")
+            +PlainText("请稍后正在处理中")
         })
-        return
+        val ai = Naifu(data.keywords)
+        val value = ai.image2image(originImage)
+        sendImg(event, value)
+        endDraw(event.toCommandSender())
+    } else {
+        sender.sendMessage(buildMessageChain {
+            +QuoteReply(event.message)
+            +PlainText("现在是贤者时间")
+        })
     }
-    sender.sendMessage(buildMessageChain {
-        +QuoteReply(event.message)
-        +PlainText("请稍后正在处理中")
-    })
-    val ai = Naifu(data.keywords)
-    val value = ai.image2image(originImage)
-    sendImg(event, value)
 }

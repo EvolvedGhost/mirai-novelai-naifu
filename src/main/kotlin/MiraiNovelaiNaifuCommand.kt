@@ -38,13 +38,29 @@ object MiraiNovelaiNaifuCommand : CompositeCommand(
     @SubCommand("text", "文本")
     @Description("以文本TAG进行绘图")
     suspend fun text(context: CommandContext, vararg tags: String) {
-        text2img(context, tags)
+        if(startDraw(context.sender)){
+            text2img(context, tags)
+            endDraw(context.sender)
+        }else{
+            context.sender.sendMessage(buildMessageChain {
+                +QuoteReply(context.originalMessage)
+                +PlainText("现在是贤者时间")
+            })
+        }
     }
 
     @SubCommand("image", "图片")
     @Description("以文本TAG辅以图片进行绘图")
     suspend fun image(context: CommandContext, vararg tags: String) {
-        img2img(context, tags)
+        if(startDraw(context.sender)){
+            img2img(context, tags)
+            endDraw(context.sender)
+        }else{
+            context.sender.sendMessage(buildMessageChain {
+                +QuoteReply(context.originalMessage)
+                +PlainText("现在是贤者时间")
+            })
+        }
     }
 
     @SubCommand("tag", "标签")

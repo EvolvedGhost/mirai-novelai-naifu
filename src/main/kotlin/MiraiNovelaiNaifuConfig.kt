@@ -26,6 +26,12 @@ object MiraiNovelaiNaifuConfig : AutoSavePluginConfig("AiConfig") {
     @ValueDescription("图片等待事件（秒）（方便手机用户以图生图）")
     var imageWaitTime: Int by value(60)
 
+    @ValueDescription("是否允许无限制的申请AI绘图")
+    var concurrent: Boolean by value(true)
+
+    @ValueDescription("若不允许无限制绘图冷却时间为（秒）")
+    var coolDownTime: Long by value(10L)
+
     @ValueDescription("Api访问地址")
     var apiSrc: String by value("http://127.0.0.1:6969/")
 
