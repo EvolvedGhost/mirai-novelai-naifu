@@ -32,6 +32,9 @@ object MiraiNovelaiNaifuConfig : AutoSavePluginConfig("AiConfig") {
     @ValueDescription("若不允许无限制绘图冷却时间为（秒）")
     var coolDownTime: Long by value(10L)
 
+    @ValueDescription("是否允许用户自定义设置参数（除了samples（出图数量）和bannedContent（强制屏蔽的用户输入标签）其他都会被用户指令覆盖）")
+    var custom: Boolean by value(true)
+
     @ValueDescription("Api访问地址")
     var apiSrc: String by value("http://127.0.0.1:6969/")
 

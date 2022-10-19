@@ -1,20 +1,10 @@
 package com.evolvedghost.naifu
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.additionalPrompt
 import com.evolvedghost.MiraiNovelaiNaifuConfig.apiSrc
 import com.evolvedghost.MiraiNovelaiNaifuConfig.connectTimeout
-import com.evolvedghost.MiraiNovelaiNaifuConfig.height
 import com.evolvedghost.MiraiNovelaiNaifuConfig.ignoreCertError
-import com.evolvedghost.MiraiNovelaiNaifuConfig.noise
 import com.evolvedghost.MiraiNovelaiNaifuConfig.readTimeout
-import com.evolvedghost.MiraiNovelaiNaifuConfig.sampler
 import com.evolvedghost.MiraiNovelaiNaifuConfig.samples
-import com.evolvedghost.MiraiNovelaiNaifuConfig.scale
-import com.evolvedghost.MiraiNovelaiNaifuConfig.seed
-import com.evolvedghost.MiraiNovelaiNaifuConfig.steps
-import com.evolvedghost.MiraiNovelaiNaifuConfig.strength
-import com.evolvedghost.MiraiNovelaiNaifuConfig.undesiredContent
-import com.evolvedghost.MiraiNovelaiNaifuConfig.width
 import com.evolvedghost.naifu.data.*
 import com.evolvedghost.utils.DebugMode
 import com.evolvedghost.utils.HTTPClient
@@ -26,16 +16,13 @@ import java.security.SecureRandom
 import java.util.*
 
 
-class Naifu() {
-    private var tags = String()
-
-    constructor(tags: String) : this() {
-        this.tags = tags
-    }
-
+class Naifu(
+    private val prompt: String,
+    private val conf: SettingVal,
+) {
     fun searchTag(): TagVal {
         //构建url地址
-        val url = apiSrc + "predict-tags?prompt=" + URLEncoder.encode(tags, "utf-8")
+        val url = apiSrc + "predict-tags?prompt=" + URLEncoder.encode(prompt, "utf-8")
         return try {
             val response = HTTPClient(url, connectTimeout, readTimeout, ignoreCertError).get()
             val responseData = response.body?.string().toString()
@@ -53,21 +40,21 @@ class Naifu() {
         return try {
             //构建Json字符串
             val gson = GsonBuilder().create()
-            val newSeed = if (seed == -1L) {
+            val newSeed = if (conf.seed == -1L) {
                 val random = SecureRandom()
                 random.nextInt().toLong() + 2147483648
             } else {
-                seed
+                conf.seed
             }
             val jsonString = gson.toJson(
                 PostData(
-                    prompt = additionalPrompt + tags,
-                    uc = undesiredContent,
-                    width = width,
-                    height = height,
-                    scale = scale,
-                    sampler = sampler,
-                    steps = steps,
+                    prompt = prompt,
+                    uc = conf.nPrompt,
+                    width = conf.width,
+                    height = conf.height,
+                    scale = conf.scale,
+                    sampler = conf.sampler,
+                    steps = conf.steps,
                     seed = newSeed,
                     n_samples = samples,
                     image = null,
@@ -90,25 +77,25 @@ class Naifu() {
             val url = apiSrc + "generate-stream"
             //构建Json字符串
             val gson = GsonBuilder().create()
-            val newSeed = if (seed == -1L) {
+            val newSeed = if (conf.seed == -1L) {
                 val random = SecureRandom()
                 random.nextInt().toLong() + 2147483648
             } else {
-                seed
+                conf.seed
             }
             val data = PostData(
-                prompt = additionalPrompt + tags,
-                uc = undesiredContent,
-                width = width,
-                height = height,
-                scale = scale,
-                sampler = sampler,
-                steps = steps,
+                prompt = prompt,
+                uc = conf.nPrompt,
+                width = conf.width,
+                height = conf.height,
+                scale = conf.scale,
+                sampler = conf.sampler,
+                steps = conf.steps,
                 seed = newSeed,
                 n_samples = samples,
                 image = null,
-                strength = strength,
-                noise = noise
+                strength = conf.strength,
+                noise = conf.noise
             )
             DebugMode().logPostData(data)
             data.image = Base64.getEncoder().encodeToString(img)

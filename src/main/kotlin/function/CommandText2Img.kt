@@ -1,5 +1,6 @@
 package com.evolvedghost.function
 
+import com.evolvedghost.MiraiNovelaiNaifuConfig.additionalPrompt
 import com.evolvedghost.naifu.Naifu
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.message.data.PlainText
@@ -21,7 +22,7 @@ suspend fun text2img(cc: CommandContext, tags: Array<out String>): Boolean {
         +QuoteReply(cc.originalMessage)
         +PlainText("请稍后正在处理中")
     })
-    val ai = Naifu(keywords)
+    val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.subject?.id))
     val value = ai.text2image()
     sendImg(cc, value)
     return false

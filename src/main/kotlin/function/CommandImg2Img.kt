@@ -1,5 +1,6 @@
 package com.evolvedghost.function
 
+import com.evolvedghost.MiraiNovelaiNaifuConfig.additionalPrompt
 import com.evolvedghost.MiraiNovelaiNaifuConfig.imageWaitTime
 import com.evolvedghost.naifu.Naifu
 import kotlinx.coroutines.sync.Mutex
@@ -56,7 +57,7 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>): Boolean {
         +QuoteReply(cc.originalMessage)
         +PlainText("请稍后正在处理中")
     })
-    val ai = Naifu(keywords)
+    val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.subject?.id))
     val value = ai.image2image(originImage)
     sendImg(cc, value)
     return false
@@ -86,7 +87,7 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
             +QuoteReply(event.message)
             +PlainText("请稍后正在处理中")
         })
-        val ai = Naifu(data.keywords)
+        val ai = Naifu(additionalPrompt + data.keywords, getConf(event.toCommandSender().subject?.id))
         val value = ai.image2image(originImage)
         sendImg(event, value)
         endDraw(event.toCommandSender(), false)

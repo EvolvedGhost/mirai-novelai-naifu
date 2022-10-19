@@ -65,4 +65,14 @@ object MiraiNovelaiNaifuCommand : CompositeCommand(
     suspend fun tag(context: CommandContext, vararg tags: String) {
         searchTag(context, tags)
     }
+
+    @SubCommand("custom", "自设")
+    @Description("设置你自己的参数")
+    suspend fun custom(context: CommandContext, key: String, value: String?) {
+        if (context.sender.subject == null) {
+            context.sender.sendMessage("未知/不允许的消息来源")
+        } else {
+            setConf(context.sender.subject!!.id, key, value)
+        }
+    }
 }
