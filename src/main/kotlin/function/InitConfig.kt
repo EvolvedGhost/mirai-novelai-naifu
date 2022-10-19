@@ -3,6 +3,7 @@ package com.evolvedghost.function
 import com.evolvedghost.MiraiNovelaiNaifu.logger
 import com.evolvedghost.MiraiNovelaiNaifu.reload
 import com.evolvedghost.MiraiNovelaiNaifuConfig
+import com.evolvedghost.MiraiNovelaiNaifuConfig.concurrent
 import com.evolvedghost.MiraiNovelaiNaifuConfig.height
 import com.evolvedghost.MiraiNovelaiNaifuConfig.noise
 import com.evolvedghost.MiraiNovelaiNaifuConfig.sampler
@@ -53,5 +54,8 @@ fun initConfig() {
     if (noise < 0 || noise > 0.99) {
         logger.info { "noise 数值错误已还原默认值 0.2" }
         noise = 0.2f
+    }
+    if (concurrent) {
+        drawCoolMap.clear()
     }
 }
