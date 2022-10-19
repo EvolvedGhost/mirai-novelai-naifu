@@ -44,6 +44,7 @@ class DrawCoolDown {
     }
 
     fun getLeftTime(): Long {
-        return leftTime
+        return if(leftTime==-1L) -1L
+        else coolDownTime - leftTime
     }
 }

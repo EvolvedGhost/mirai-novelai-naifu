@@ -60,7 +60,7 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>): Boolean {
     val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.user?.id))
     val value = ai.image2image(originImage)
     sendImg(cc, value)
-    return false
+    return !value.success
 }
 
 suspend fun img2imgAfterWait(event: MessageEvent) {
@@ -90,7 +90,7 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
         val ai = Naifu(additionalPrompt + data.keywords, getConf(event.toCommandSender().user?.id))
         val value = ai.image2image(originImage)
         sendImg(event, value)
-        endDraw(event.toCommandSender(), false)
+        endDraw(event.toCommandSender(), !value.success)
     } else {
         sender.sendMessage(buildMessageChain {
             +QuoteReply(event.message)
