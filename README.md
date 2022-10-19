@@ -34,13 +34,14 @@
 
 ## 插件命令
 
-| 指令                 | 默认别名 | 功能         |
-|--------------------|------------|------------|
-| `/ai image <tags> <image>`     | `/ai 图片 <tags> <image>` | 以图生图    |
-| `/ai text <tags>`       | `/ai 文本 <tags>`   | 以文本生图  |
-| `/ai tag <tags>` | `/ai 标签 <tags>` | 搜索Tag名称 |
-| `/ai switch` | `/ai 开关` | 开关本群ai绘图功能 |
-| `/ai reload` | `/ai 重载` | 快速重载插件配置项（不需要重启Mirai） |
+| 指令                         | 默认别名                    | 功能                    |
+|----------------------------|-------------------------|-----------------------|
+| `/ai image <tags> <image>` | `/ai 图片 <tags> <image>` | 以图生图                  |
+| `/ai text <tags>`          | `/ai 文本 <tags>`         | 以文本生图                 |
+| `/ai tag <tags>`           | `/ai 标签 <tags>`         | 搜索Tag名称               |
+| `/ai custom <key> <value>` | `/ai 自设 <key> <value>`  | 自定义设置ai绘图参数           |
+| `/ai switch`               | `/ai 开关`                | 开关本群ai绘图功能            |
+| `/ai reload`               | `/ai 重载`                | 快速重载插件配置项（不需要重启Mirai） |
 
 ## 插件配置
 
