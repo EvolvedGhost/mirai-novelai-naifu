@@ -57,7 +57,7 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>): Boolean {
         +QuoteReply(cc.originalMessage)
         +PlainText("请稍后正在处理中")
     })
-    val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.subject?.id))
+    val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.user?.id))
     val value = ai.image2image(originImage)
     sendImg(cc, value)
     return false
@@ -87,7 +87,7 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
             +QuoteReply(event.message)
             +PlainText("请稍后正在处理中")
         })
-        val ai = Naifu(additionalPrompt + data.keywords, getConf(event.toCommandSender().subject?.id))
+        val ai = Naifu(additionalPrompt + data.keywords, getConf(event.toCommandSender().user?.id))
         val value = ai.image2image(originImage)
         sendImg(event, value)
         endDraw(event.toCommandSender(), false)

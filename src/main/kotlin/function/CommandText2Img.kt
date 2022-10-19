@@ -22,7 +22,7 @@ suspend fun text2img(cc: CommandContext, tags: Array<out String>): Boolean {
         +QuoteReply(cc.originalMessage)
         +PlainText("请稍后正在处理中")
     })
-    val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.subject?.id))
+    val ai = Naifu(additionalPrompt + keywords, getConf(cc.sender.user?.id))
     val value = ai.text2image()
     sendImg(cc, value)
     return false
