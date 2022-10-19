@@ -6,8 +6,8 @@ import net.mamoe.mirai.message.data.PlainText
 import net.mamoe.mirai.message.data.QuoteReply
 import net.mamoe.mirai.message.data.buildMessageChain
 
-suspend fun text2img(cc: CommandContext, tags: Array<out String>) {
-    if (checkCommandInvalid(cc)) return
+suspend fun text2img(cc: CommandContext, tags: Array<out String>): Boolean {
+    if (checkCommandInvalid(cc)) return true
     val keywords = tags.joinToString(" ")
     val banWord = checkBannedWords(keywords)
     if (banWord != null) {
@@ -15,7 +15,7 @@ suspend fun text2img(cc: CommandContext, tags: Array<out String>) {
             +QuoteReply(cc.originalMessage)
             +PlainText("不允许的tag：$banWord")
         })
-        return
+        return true
     }
     cc.sender.sendMessage(buildMessageChain {
         +QuoteReply(cc.originalMessage)
@@ -24,4 +24,5 @@ suspend fun text2img(cc: CommandContext, tags: Array<out String>) {
     val ai = Naifu(keywords)
     val value = ai.text2image()
     sendImg(cc, value)
+    return false
 }

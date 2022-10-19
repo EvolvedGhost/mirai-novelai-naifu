@@ -21,8 +21,8 @@ data class Img2imgWaitData(
 val img2imgWaitMap = mutableMapOf<String, Img2imgWaitData>()
 val img2imgWaitMapLock = Mutex()
 
-suspend fun img2img(cc: CommandContext, tags: Array<out String>) {
-    if (checkCommandInvalid(cc)) return
+suspend fun img2img(cc: CommandContext, tags: Array<out String>): Boolean {
+    if (checkCommandInvalid(cc)) return true
     var keywords = tags.joinToString(" ")
     keywords = keywords.replace("[图片]", "")
     keywords = keywords.replace("[动画表情]", "")
@@ -32,7 +32,7 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>) {
             +QuoteReply(cc.originalMessage)
             +PlainText("不允许的tag：$banWord")
         })
-        return
+        return true
     }
     val originImage = cc.originalMessage.find { it is Image } as Image?
     if (originImage == null) {
@@ -50,7 +50,7 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>) {
                     Img2imgWaitData(System.currentTimeMillis(), keywords)
             }
         }
-        return
+        return true
     }
     cc.sender.sendMessage(buildMessageChain {
         +QuoteReply(cc.originalMessage)
@@ -59,6 +59,7 @@ suspend fun img2img(cc: CommandContext, tags: Array<out String>) {
     val ai = Naifu(keywords)
     val value = ai.image2image(originImage)
     sendImg(cc, value)
+    return false
 }
 
 suspend fun img2imgAfterWait(event: MessageEvent) {
@@ -78,6 +79,7 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
                 +QuoteReply(event.message)
                 +PlainText("未识别到图片")
             })
+            endDraw(event.toCommandSender(), true)
             return
         }
         sender.sendMessage(buildMessageChain {
@@ -87,7 +89,7 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
         val ai = Naifu(data.keywords)
         val value = ai.image2image(originImage)
         sendImg(event, value)
-        endDraw(event.toCommandSender())
+        endDraw(event.toCommandSender(), false)
     } else {
         sender.sendMessage(buildMessageChain {
             +QuoteReply(event.message)

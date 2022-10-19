@@ -4,7 +4,6 @@ import com.evolvedghost.function.*
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.console.command.CompositeCommand
 import net.mamoe.mirai.console.command.isConsole
-import net.mamoe.mirai.message.data.Image
 import net.mamoe.mirai.message.data.PlainText
 import net.mamoe.mirai.message.data.QuoteReply
 import net.mamoe.mirai.message.data.buildMessageChain
@@ -38,10 +37,9 @@ object MiraiNovelaiNaifuCommand : CompositeCommand(
     @SubCommand("text", "文本")
     @Description("以文本TAG进行绘图")
     suspend fun text(context: CommandContext, vararg tags: String) {
-        if(startDraw(context.sender)){
-            text2img(context, tags)
-            endDraw(context.sender)
-        }else{
+        if (startDraw(context.sender)) {
+            endDraw(context.sender, text2img(context, tags))
+        } else {
             context.sender.sendMessage(buildMessageChain {
                 +QuoteReply(context.originalMessage)
                 +PlainText("现在是贤者时间")
@@ -52,10 +50,9 @@ object MiraiNovelaiNaifuCommand : CompositeCommand(
     @SubCommand("image", "图片")
     @Description("以文本TAG辅以图片进行绘图")
     suspend fun image(context: CommandContext, vararg tags: String) {
-        if(startDraw(context.sender)){
-            img2img(context, tags)
-            endDraw(context.sender)
-        }else{
+        if (startDraw(context.sender)) {
+            endDraw(context.sender, img2img(context, tags))
+        } else {
             context.sender.sendMessage(buildMessageChain {
                 +QuoteReply(context.originalMessage)
                 +PlainText("现在是贤者时间")

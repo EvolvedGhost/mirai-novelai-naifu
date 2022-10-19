@@ -1,6 +1,5 @@
 package com.evolvedghost.utils
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.concurrent
 import com.evolvedghost.MiraiNovelaiNaifuConfig.coolDownTime
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -30,6 +29,12 @@ class DrawCoolDown {
             mutex.withLock {
                 isCool = true
             }
+        }
+    }
+
+    suspend fun endInstantly() {
+        mutex.withLock {
+            isCool = true
         }
     }
 }

@@ -17,7 +17,7 @@ suspend fun startDraw(cs: CommandSender): Boolean {
     return drawCoolMap[subject.id]!!.start()
 }
 
-suspend fun endDraw(cs: CommandSender) {
+suspend fun endDraw(cs: CommandSender, instantly: Boolean) {
     if (concurrent) {
         return
     }
@@ -26,5 +26,9 @@ suspend fun endDraw(cs: CommandSender) {
         drawCoolMap[subject.id] = DrawCoolDown()
         return
     }
-    drawCoolMap[subject.id]!!.end()
+    if(instantly){
+        drawCoolMap[subject.id]!!.endInstantly()
+    }else{
+        drawCoolMap[subject.id]!!.end()
+    }
 }
