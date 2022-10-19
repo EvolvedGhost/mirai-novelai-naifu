@@ -19,7 +19,7 @@ object MiraiNovelaiNaifu : KotlinPlugin(
     JvmPluginDescription(
         id = "com.evolvedghost.mirai-novelai-naifu",
         name = "Mirai Novelai Naifu",
-        version = "0.0.4",
+        version = "0.0.5",
     ) {
         author("EvolvedGhost")
         info("""NAIFU的Mirai插件""")

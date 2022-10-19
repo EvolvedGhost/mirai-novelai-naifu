@@ -1,7 +1,9 @@
 package com.evolvedghost.naifu.data
 
 import com.evolvedghost.MiraiNovelaiNaifuConfig
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SettingVal(
     var nPrompt: String = MiraiNovelaiNaifuConfig.undesiredContent,
     var width: Int = MiraiNovelaiNaifuConfig.width,

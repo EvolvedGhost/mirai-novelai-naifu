@@ -1,6 +1,7 @@
 package com.evolvedghost.function
 
 import com.evolvedghost.naifu.Naifu
+import com.evolvedghost.naifu.data.SettingVal
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.console.command.isConsole
 import net.mamoe.mirai.message.data.PlainText
@@ -13,7 +14,7 @@ suspend fun searchTag(cc: CommandContext, tags: Array<out String>) {
         return
     }
     val keywords = tags.joinToString(" ")
-    val tagData = Naifu(keywords).searchTag()
+    val tagData = Naifu(keywords, SettingVal()).searchTag()
     if (!tagData.success || tagData.tags == null) {
         cc.sender.sendMessage(buildMessageChain {
             +QuoteReply(cc.originalMessage)
