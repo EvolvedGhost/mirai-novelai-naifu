@@ -93,7 +93,7 @@ suspend fun img2imgAfterWait(event: MessageEvent) {
     } else {
         sender.sendMessage(buildMessageChain {
             +QuoteReply(event.message)
-            +PlainText("现在是贤者时间")
+            +PlainText(waitTimeDraw(event.toCommandSender()))
         })
     }
 }

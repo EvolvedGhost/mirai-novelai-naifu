@@ -26,9 +26,25 @@ suspend fun endDraw(cs: CommandSender, instantly: Boolean) {
         drawCoolMap[subject.id] = DrawCoolDown()
         return
     }
-    if(instantly){
+    if (instantly) {
         drawCoolMap[subject.id]!!.endInstantly()
-    }else{
+    } else {
         drawCoolMap[subject.id]!!.end()
+    }
+}
+
+fun waitTimeDraw(cs: CommandSender): String {
+    if (concurrent) {
+        return "出现错误"
+    }
+    val subject = cs.subject ?: return "出现错误"
+    if (drawCoolMap[subject.id] == null) {
+        return "出现错误"
+    }
+    val left = drawCoolMap[subject.id]!!.getLeftTime()
+    return if (left == -1L) {
+        "请等待上一张图绘制完毕"
+    } else {
+        "现在是贤者时间，请等待 $left 秒"
     }
 }

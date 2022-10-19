@@ -42,7 +42,7 @@ object MiraiNovelaiNaifuCommand : CompositeCommand(
         } else {
             context.sender.sendMessage(buildMessageChain {
                 +QuoteReply(context.originalMessage)
-                +PlainText("现在是贤者时间")
+                +PlainText(waitTimeDraw(context.sender))
             })
         }
     }
@@ -55,7 +55,7 @@ object MiraiNovelaiNaifuCommand : CompositeCommand(
         } else {
             context.sender.sendMessage(buildMessageChain {
                 +QuoteReply(context.originalMessage)
-                +PlainText("现在是贤者时间")
+                +PlainText(waitTimeDraw(context.sender))
             })
         }
     }

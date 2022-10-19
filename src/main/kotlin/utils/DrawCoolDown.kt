@@ -11,6 +11,7 @@ import kotlinx.coroutines.sync.withLock
 class DrawCoolDown {
     private var isCool = true
     private var mutex = Mutex()
+    private var leftTime = -1L
 
     suspend fun start(): Boolean {
         mutex.withLock {
@@ -25,7 +26,11 @@ class DrawCoolDown {
     @OptIn(DelicateCoroutinesApi::class)
     suspend fun end() {
         GlobalScope.launch {
-            delay(coolDownTime * 1000)
+            leftTime = 0
+            while (leftTime < coolDownTime) {
+                delay(1000)
+                leftTime++
+            }
             mutex.withLock {
                 isCool = true
             }
@@ -36,5 +41,9 @@ class DrawCoolDown {
         mutex.withLock {
             isCool = true
         }
+    }
+
+    fun getLeftTime(): Long {
+        return leftTime
     }
 }
