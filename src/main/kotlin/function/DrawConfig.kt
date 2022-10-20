@@ -25,7 +25,7 @@ fun setConf(user: Long, param: Array<out String>): String {
 """
     }
     val keySet =
-        mutableSetOf("negativeprompt", "width", "height", "scale", "sampler", "steps", "seed", "strength", "noise")
+        mutableSetOf("nprompt", "width", "height", "scale", "sampler", "steps", "seed", "strength", "noise")
     val lowerKey = param[0].lowercase(Locale.ENGLISH)
     if (lowerKey == "default" || lowerKey == "默认") {
         personalSetting[user] = SettingVal()

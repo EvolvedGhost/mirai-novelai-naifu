@@ -17,9 +17,9 @@ data class SettingVal(
 ) {
     fun set(key: String, value: String?): String {
         return when (key) {
-            "negativeprompt" -> {
+            "nprompt" -> {
                 nPrompt = value ?: ""
-                "您的negativeprompt已设置为：$nPrompt"
+                "您的nprompt已设置为：$nPrompt"
             }
             "width" -> {
                 val tempWidth = try {
@@ -44,7 +44,7 @@ data class SettingVal(
                     "设置错误，height必须为64的倍数，范围[64,1024]"
                 } else {
                     height = tempHeight
-                    "您的height已设置为：$width"
+                    "您的height已设置为：$height"
                 }
             }
             "scale" -> {
