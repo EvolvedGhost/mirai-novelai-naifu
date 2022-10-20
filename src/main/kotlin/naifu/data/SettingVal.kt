@@ -15,15 +15,19 @@ data class SettingVal(
     var strength: Float = MiraiNovelaiNaifuConfig.strength,
     var noise: Float = MiraiNovelaiNaifuConfig.noise,
 ) {
-    fun set(key: String, value: String): String {
+    fun set(key: String, value: String?): String {
         return when (key) {
             "negativeprompt" -> {
-                nPrompt = value
+                nPrompt = value ?: ""
                 "您的negativeprompt已设置为：$nPrompt"
             }
             "width" -> {
-                val tempWidth = value.toInt()
-                if (tempWidth % 64 != 0 || tempWidth < 64 || tempWidth > 1024) {
+                val tempWidth = try {
+                    value?.toInt()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempWidth == null || tempWidth % 64 != 0 || tempWidth < 64 || tempWidth > 1024) {
                     "设置错误，width必须为64的倍数，范围[64,1024]"
                 } else {
                     width = tempWidth
@@ -31,8 +35,12 @@ data class SettingVal(
                 }
             }
             "height" -> {
-                val tempHeight = value.toInt()
-                if (tempHeight % 64 != 0 || tempHeight < 64 || tempHeight > 1024) {
+                val tempHeight = try {
+                    value?.toInt()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempHeight == null || tempHeight % 64 != 0 || tempHeight < 64 || tempHeight > 1024) {
                     "设置错误，height必须为64的倍数，范围[64,1024]"
                 } else {
                     height = tempHeight
@@ -40,8 +48,12 @@ data class SettingVal(
                 }
             }
             "scale" -> {
-                val tempScale = value.toFloat()
-                if (tempScale < 1.1 || tempScale > 100) {
+                val tempScale = try {
+                    value?.toFloat()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempScale == null || tempScale < 1.1 || tempScale > 100) {
                     "设置错误，scale范围[1.1,100.0]"
                 } else {
                     scale = tempScale
@@ -50,7 +62,7 @@ data class SettingVal(
             }
             "sampler" -> {
                 val samplerSet = setOf("k_euler_ancestral", "k_euler", "k_lms", "plms", "ddim")
-                if (!samplerSet.contains(value)) {
+                if (value == null || !samplerSet.contains(value)) {
                     "设置错误，sampler可选项：【推荐：k_euler_ancestral、k_euler、k_lms；其他：plms、ddim】"
                 } else {
                     sampler = value
@@ -58,8 +70,12 @@ data class SettingVal(
                 }
             }
             "steps" -> {
-                val tempSteps = value.toInt()
-                if (tempSteps < 1 || tempSteps > 50) {
+                val tempSteps = try {
+                    value?.toInt()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempSteps == null || tempSteps < 1 || tempSteps > 50) {
                     "设置错误，steps范围[1,50]"
                 } else {
                     steps = tempSteps
@@ -67,8 +83,12 @@ data class SettingVal(
                 }
             }
             "seed" -> {
-                val tempSeed = value.toLong()
-                if ((tempSeed != -1L) && ((tempSeed < 0) || (tempSeed > 4294967295))) {
+                val tempSeed = try {
+                    value?.toLong()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempSeed == null || ((tempSeed != -1L) && ((tempSeed < 0) || (tempSeed > 4294967295)))) {
                     "设置错误，seed可设置为-1（随机）或[0,4294967295]（固定）"
                 } else {
                     seed = tempSeed
@@ -76,8 +96,12 @@ data class SettingVal(
                 }
             }
             "strength" -> {
-                val tempStrength = value.toFloat()
-                if (tempStrength < 0 || tempStrength > 0.99) {
+                val tempStrength = try {
+                    value?.toFloat()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempStrength == null || tempStrength < 0 || tempStrength > 0.99) {
                     "设置错误，strength范围[0,0.99]（仅影响以图生图）"
                 } else {
                     strength = tempStrength
@@ -85,8 +109,12 @@ data class SettingVal(
                 }
             }
             "noise" -> {
-                val tempNoise = value.toFloat()
-                if (tempNoise < 0 || tempNoise > 0.99) {
+                val tempNoise = try {
+                    value?.toFloat()
+                } catch (e: Exception) {
+                    null
+                }
+                if (tempNoise == null || tempNoise < 0 || tempNoise > 0.99) {
                     "设置错误，noise范围[0,0.99]（仅影响以图生图）"
                 } else {
                     noise = tempNoise

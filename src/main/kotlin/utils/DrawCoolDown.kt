@@ -16,6 +16,7 @@ class DrawCoolDown {
     suspend fun start(): Boolean {
         mutex.withLock {
             if (isCool) {
+                leftTime = -1L
                 isCool = false
                 return true
             }
