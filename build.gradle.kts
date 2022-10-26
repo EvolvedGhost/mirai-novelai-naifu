@@ -7,15 +7,16 @@ plugins {
 }
 
 group = "com.evolvedghost"
-version = "0.0.5"
+version = "0.0.6"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
     mavenCentral()
 }
 dependencies {
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.10")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.vdurmont:emoji-java:5.1.1")
 }
 
 

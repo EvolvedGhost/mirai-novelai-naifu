@@ -8,16 +8,9 @@ import net.mamoe.mirai.message.data.QuoteReply
 import net.mamoe.mirai.message.data.buildMessageChain
 
 suspend fun text2img(cc: CommandContext, tags: Array<out String>): Boolean {
-    if (checkCommandInvalid(cc)) return true
-    val keywords = tags.joinToString(" ")
-    val banWord = checkBannedWords(keywords)
-    if (banWord != null) {
-        cc.sender.sendMessage(buildMessageChain {
-            +QuoteReply(cc.originalMessage)
-            +PlainText("不允许的tag：$banWord")
-        })
-        return true
-    }
+    val tag = checkTags(cc, tags)
+    if (tag.`return`) return true
+    val keywords = tag.newTag
     cc.sender.sendMessage(buildMessageChain {
         +QuoteReply(cc.originalMessage)
         +PlainText("请稍后正在处理中")

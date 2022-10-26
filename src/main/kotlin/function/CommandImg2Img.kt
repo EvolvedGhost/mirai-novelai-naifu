@@ -23,18 +23,9 @@ val img2imgWaitMap = mutableMapOf<String, Img2imgWaitData>()
 val img2imgWaitMapLock = Mutex()
 
 suspend fun img2img(cc: CommandContext, tags: Array<out String>): Boolean {
-    if (checkCommandInvalid(cc)) return true
-    var keywords = tags.joinToString(" ")
-    keywords = keywords.replace("[图片]", "")
-    keywords = keywords.replace("[动画表情]", "")
-    val banWord = checkBannedWords(keywords)
-    if (banWord != null) {
-        cc.sender.sendMessage(buildMessageChain {
-            +QuoteReply(cc.originalMessage)
-            +PlainText("不允许的tag：$banWord")
-        })
-        return true
-    }
+    val tag = checkTags(cc, tags)
+    if (tag.`return`) return true
+    val keywords = tag.newTag
     val originImage = cc.originalMessage.find { it is Image } as Image?
     if (originImage == null) {
         cc.sender.sendMessage(buildMessageChain {

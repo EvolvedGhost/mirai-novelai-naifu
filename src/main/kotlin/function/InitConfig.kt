@@ -13,6 +13,7 @@ import com.evolvedghost.MiraiNovelaiNaifuConfig.seed
 import com.evolvedghost.MiraiNovelaiNaifuConfig.steps
 import com.evolvedghost.MiraiNovelaiNaifuConfig.strength
 import com.evolvedghost.MiraiNovelaiNaifuConfig.width
+import com.evolvedghost.data.tagTranslate
 import net.mamoe.mirai.utils.info
 
 val samplerSet = setOf("k_euler_ancestral", "k_euler", "k_lms", "plms", "ddim")
@@ -58,4 +59,5 @@ fun initConfig() {
     if (concurrent) {
         drawCoolMap.clear()
     }
+    tagTranslate
 }
