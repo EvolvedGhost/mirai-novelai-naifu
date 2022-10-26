@@ -11,7 +11,6 @@ import com.evolvedghost.utils.HTTPClient
 import com.google.gson.GsonBuilder
 import net.mamoe.mirai.message.data.Image
 import net.mamoe.mirai.message.data.Image.Key.queryUrl
-import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
 
@@ -22,7 +21,7 @@ class Naifu(
 ) {
     fun searchTag(): TagVal {
         //构建url地址
-        val url = apiSrc + "predict-tags?prompt=" + URLEncoder.encode(prompt, "utf-8")
+        val url = apiSrc + "predict-tags?prompt=" + prompt
         return try {
             val response = HTTPClient(url, connectTimeout, readTimeout, ignoreCertError).get()
             val responseData = response.body?.string().toString()

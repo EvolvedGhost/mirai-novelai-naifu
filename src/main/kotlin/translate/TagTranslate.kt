@@ -48,7 +48,7 @@ class TagTranslate {
         for (i in 0 until regs.size / 2) {
             finalTag = finalTag.replace(regs[i], regs[i + regs.size / 2])
         }
-        val pattern = Pattern.compile("^[A-Za-z0-9`~!@#$%^&*()\\-_=+\\[\\]{};:'\",<.>/?\\\\|]+$")
+        val pattern = Pattern.compile("^[A-Za-z0-9`~!@#$%^&*()\\-_=+\\[\\]{};:'\",<.>/?\\\\| ]+$")
         if (pattern.matcher(finalTag).matches()) {
             return ReturnVal(false, finalTag)
         }
