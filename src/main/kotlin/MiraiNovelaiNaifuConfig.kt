@@ -47,6 +47,9 @@ object MiraiNovelaiNaifuConfig : AutoSavePluginConfig("AiConfig") {
     @ValueDescription("忽略证书错误（如果报证书相关错误请打开）")
     var ignoreCertError: Boolean by value(false)
 
+    @ValueDescription("强制翻译中文TAG")
+    var translateTags: Boolean by value(true)
+
     @ValueDescription("除了用户的标签以外，额外强制加入的标签（将加载标签前面），清空则为不加")
     var additionalPrompt: String by value("masterpiece, best quality, ")
 

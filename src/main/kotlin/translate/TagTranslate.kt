@@ -2,6 +2,7 @@ package translate
 
 import com.evolvedghost.MiraiNovelaiNaifu.logger
 import com.evolvedghost.MiraiNovelaiNaifuConfig
+import com.evolvedghost.MiraiNovelaiNaifuConfig.translateTags
 import com.evolvedghost.translate.data.ReturnVal
 import com.evolvedghost.translate.data.TranslateData
 import com.evolvedghost.utils.DebugMode
@@ -49,7 +50,7 @@ class TagTranslate {
             finalTag = finalTag.replace(regs[i], regs[i + regs.size / 2])
         }
         val pattern = Pattern.compile("^[A-Za-z0-9`~!@#$%^&*()\\-_=+\\[\\]{};:'\",<.>/?\\\\| ]+$")
-        if (pattern.matcher(finalTag).matches()) {
+        if (!translateTags || pattern.matcher(finalTag).matches()) {
             return ReturnVal(false, finalTag)
         }
         // 此处拆词
