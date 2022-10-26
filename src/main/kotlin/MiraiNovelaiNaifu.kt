@@ -31,14 +31,18 @@ object MiraiNovelaiNaifu : KotlinPlugin(
         MiraiNovelaiNaifuCommand.register()
         globalEventChannel().subscribeMessages {
             content {
-                val sender = this.toCommandSender()
-                if (sender.isConsole()) false
-                else if (sender is GroupAwareCommandSender) {
-                    val data = img2imgWaitMap[sender.group.id.toString() + "-" + sender.user.id.toString()]
-                    !(data == null || data.timestamp + (imageWaitTime * 1000) < System.currentTimeMillis())
-                } else {
-                    val data = img2imgWaitMap[sender.user!!.id.toString()]
-                    !(data == null || data.timestamp + (imageWaitTime * 1000) < System.currentTimeMillis())
+                try {
+                    val sender = this.toCommandSender()
+                    if (sender.isConsole()) false
+                    else if (sender is GroupAwareCommandSender) {
+                        val data = img2imgWaitMap[sender.group.id.toString() + "-" + sender.user.id.toString()]
+                        !(data == null || data.timestamp + (imageWaitTime * 1000) < System.currentTimeMillis())
+                    } else {
+                        val data = img2imgWaitMap[sender.user!!.id.toString()]
+                        !(data == null || data.timestamp + (imageWaitTime * 1000) < System.currentTimeMillis())
+                    }
+                } catch (e: Exception) {
+                    false
                 }
             } quoteReply {
                 img2imgAfterWait(this)
