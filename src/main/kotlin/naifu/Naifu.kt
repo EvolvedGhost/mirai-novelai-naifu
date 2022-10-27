@@ -28,7 +28,7 @@ class Naifu(
             val t = GsonBuilder().create().fromJson(responseData, PredictTagData::class.java)
             TagVal(true, t, String())
         } catch (e: Exception) {
-            DebugMode().logException(e)
+            DebugMode.logException(e)
             TagVal(false, null, e.toString())
         }
     }
@@ -61,10 +61,10 @@ class Naifu(
                     noise = null
                 )
             )
-            DebugMode().logText("请求的Json字段为：$jsonString")
+            DebugMode.logText("请求的Json字段为：$jsonString")
             getReturnVal(url, jsonString)
         } catch (e: Exception) {
-            DebugMode().logException(e)
+            DebugMode.logException(e)
             ReturnVal(false, mutableListOf(), e.toString())
         }
     }
@@ -96,12 +96,12 @@ class Naifu(
                 strength = conf.strength,
                 noise = conf.noise
             )
-            DebugMode().logPostData(data)
+            DebugMode.logPostData(data)
             data.image = Base64.getEncoder().encodeToString(img)
             val jsonString = gson.toJson(data)
             getReturnVal(url, jsonString)
         } catch (e: Exception) {
-            DebugMode().logException(e)
+            DebugMode.logException(e)
             ReturnVal(false, mutableListOf(), e.toString())
         }
     }

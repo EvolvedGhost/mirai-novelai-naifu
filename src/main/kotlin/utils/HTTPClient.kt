@@ -1,10 +1,15 @@
 package com.evolvedghost.utils
 
+import com.evolvedghost.TranslateConfig.proxyAddress
+import com.evolvedghost.TranslateConfig.proxyPort
+import com.evolvedghost.TranslateConfig.useProxy
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import java.net.InetSocketAddress
+import java.net.Proxy
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
@@ -36,6 +41,26 @@ class HTTPClient(
         return client.newCall(request).execute()
     }
 
+    fun getWithProxy(): Response {
+        val client =
+            if (useProxy) {
+                getProxyClient()
+            } else {
+                getClient()
+            }
+        val request = Request.Builder().url(url).get().build()
+        return client.newCall(request).execute()
+    }
+
+    private fun getProxyClient(): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+        return builder
+            .connectTimeout(cTimeout, TimeUnit.SECONDS)
+            .readTimeout(rTimeout, TimeUnit.SECONDS)
+            .proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(proxyAddress, proxyPort)))
+            .build()
+    }
+
     private fun getClient(): OkHttpClient {
         val builder = if (ignoreCertificate) {
             val sslContext = SSLContext.getInstance("SSL")
@@ -50,8 +75,9 @@ class HTTPClient(
         return builder
             .connectTimeout(cTimeout, TimeUnit.SECONDS)
             .readTimeout(rTimeout, TimeUnit.SECONDS)
-            .build();
+            .build()
     }
+
     // 忽略证书错误
     private var trustAllCerts = arrayOf<TrustManager>(
         object : X509TrustManager {

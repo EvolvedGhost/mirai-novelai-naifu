@@ -1,12 +1,15 @@
 package translate
 
-import com.evolvedghost.MiraiNovelaiNaifu.logger
 import com.evolvedghost.MainConfig
 import com.evolvedghost.MainConfig.translateTags
-import com.evolvedghost.translate.data.ReturnVal
-import com.evolvedghost.translate.data.TranslateData
+import com.evolvedghost.MiraiNovelaiNaifu.logger
+import com.evolvedghost.TranslateConfig.baiduAppId
+import com.evolvedghost.TranslateConfig.baiduSecretKey
+import com.evolvedghost.TranslateConfig.translateApi
+import com.evolvedghost.translate.data.*
 import com.evolvedghost.utils.DebugMode
 import com.evolvedghost.utils.HTTPClient
+import com.evolvedghost.utils.MD5Util
 import com.github.pekoto.fastfuzzystringmatcher.StringMatcher
 import com.google.gson.Gson
 import com.vdurmont.emoji.EmojiParser
@@ -14,6 +17,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import translate.data.EHTAG
+import java.security.SecureRandom
 import java.util.*
 import java.util.regex.Pattern
 
@@ -78,21 +82,70 @@ class TagTranslate {
             webWords = enWords
         }
         // 此处翻译
-        val translateBody =
-            HTTPClient(
-                "https://fanyi.youdao.com/translate?&doctype=json&type=ZH_CN2EN&i=" +
-                        webWords.joinToString(
-                            ","
-                        ),
-                MainConfig.connectTimeout,
-                MainConfig.readTimeout,
-                MainConfig.ignoreCertError
-            ).get().body?.string()
         try {
-            val translateData = Gson().fromJson(translateBody, TranslateData::class.java)
-            enWords.add(translateData.translateResult[0][0].tgt)
+            when (translateApi) {
+                2 -> {
+                    // 谷歌翻译
+                    val translateBody =
+                        HTTPClient(
+                            "https://translate.google.com/translate_a/single?client=gtx&dt=t&dj=1&ie=UTF-8&sl=auto&tl=en&q=" +
+                                    webWords.joinToString(
+                                        ","
+                                    ),
+                            MainConfig.connectTimeout,
+                            MainConfig.readTimeout,
+                            MainConfig.ignoreCertError
+                        ).getWithProxy().body?.string()
+                    try {
+                        val translateData = Gson().fromJson(translateBody, GGTranslateData::class.java)
+                        enWords.add(translateData.sentences[0].trans)
+                    } catch (e: Exception) {
+                        DebugMode.logException(e)
+                    }
+                }
+                3 -> {
+                    // 百度翻译
+                    val salt = SecureRandom().nextInt() + 2147483648
+                    val q = webWords.joinToString(",")
+                    val sign = MD5Util.getMD5Str(baiduAppId + q + salt + baiduSecretKey)
+                    println("https://fanyi-api.baidu.com/api/trans/vip/translate?from=auto&to=en&appid=$baiduAppId&salt=$salt&sign=$sign&q=$q")
+                    val translateBody =
+                        HTTPClient(
+                            "https://fanyi-api.baidu.com/api/trans/vip/translate?from=auto&to=en&appid=$baiduAppId&salt=$salt&sign=$sign&q=$q",
+                            MainConfig.connectTimeout,
+                            MainConfig.readTimeout,
+                            MainConfig.ignoreCertError
+                        ).get().body?.string()
+                    try {
+                        val translateData = Gson().fromJson(translateBody, BDTranslateData::class.java)
+                        enWords.add(translateData.trans_result[0].dst)
+                    } catch (e: Exception) {
+                        DebugMode.logException(e)
+                    }
+                }
+                else -> {
+                    // 有道翻译
+                    val translateBody =
+                        HTTPClient(
+                            "https://fanyi.youdao.com/translate?&doctype=json&type=ZH_CN2EN&i=" +
+                                    webWords.joinToString(
+                                        ","
+                                    ),
+                            MainConfig.connectTimeout,
+                            MainConfig.readTimeout,
+                            MainConfig.ignoreCertError
+                        ).get().body?.string()
+                    try {
+                        val translateData = Gson().fromJson(translateBody, YDTranslateData::class.java)
+                        enWords.add(translateData.translateResult[0][0].tgt)
+                    } catch (e: Exception) {
+                        DebugMode.logException(e)
+                    }
+                }
+            }
         } catch (e: Exception) {
-            DebugMode().logException(e)
+            enWords.add(webWords.joinToString(","))
+            DebugMode.logException(e)
         }
         return ReturnVal(true, enWords.joinToString(","))
     }
@@ -105,7 +158,7 @@ class TagTranslate {
                 10,
                 20,
                 true
-            ).get().body?.string() ?: return
+            ).getWithProxy().body?.string() ?: return
             val ehTag = Gson().fromJson(json, EHTAG::class.java)
             if (ehTag.head.committer.`when` == matcherEhTagWhen) {
                 return
@@ -135,7 +188,7 @@ class TagTranslate {
             matcherEhTagWhen = ehTag.head.committer.`when`
             matcherEhTagAlive = true
         } catch (e: Exception) {
-            DebugMode().logException(e)
+            DebugMode.logException(e)
         }
     }
 

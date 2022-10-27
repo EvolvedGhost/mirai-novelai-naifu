@@ -13,6 +13,8 @@ import com.evolvedghost.MainConfig.seed
 import com.evolvedghost.MainConfig.steps
 import com.evolvedghost.MainConfig.strength
 import com.evolvedghost.MainConfig.width
+import com.evolvedghost.MiraiNovelaiNaifu.save
+import com.evolvedghost.TranslateConfig
 import com.evolvedghost.data.tagTranslate
 import net.mamoe.mirai.utils.info
 
@@ -20,6 +22,7 @@ val samplerSet = setOf("k_euler_ancestral", "k_euler", "k_lms", "plms", "ddim")
 
 fun initConfig() {
     MainConfig.reload()
+    TranslateConfig.reload()
     if (samples < 1 || samples > 100) {
         logger.info { "samples 数值错误已还原默认值 1" }
         samples = 1
@@ -60,4 +63,6 @@ fun initConfig() {
         drawCoolMap.clear()
     }
     tagTranslate
+    MainConfig.save()
+    TranslateConfig.save()
 }

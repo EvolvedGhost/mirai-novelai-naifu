@@ -53,6 +53,7 @@ object MiraiNovelaiNaifu : KotlinPlugin(
 
     override fun onDisable() {
         MainConfig.save()
+        TranslateConfig.save()
         MiraiNovelaiNaifuData.save()
         MiraiNovelaiNaifuCommand.unregister()
         logger.info { "Mirai Novelai Naifu已经成功卸载" }

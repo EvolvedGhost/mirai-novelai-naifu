@@ -86,3 +86,30 @@ object MainConfig : AutoSavePluginConfig("AiConfig") {
     @ValueDescription("较高的噪声将增加添加到上载图像中的细节，但如果过高则会导致瑕疵。通常来说，噪声应始终小于强度，范围[0,0.99]，仅限以图出图")
     var noise: Float by value(0.2f)
 }
+
+object TranslateConfig : AutoSavePluginConfig("TranslateConfig") {
+    @ValueDescription(
+        """
+        使用的翻译API：
+        1、有道翻译（绝大部分IP不能使用）
+        2、谷歌翻译（需配置代理）
+        3、百度翻译（需申请APIKEY：https://fanyi-api.baidu.com/
+    """
+    )
+    val translateApi: Int by value(1)
+
+    @ValueDescription("谷歌翻译/基础词库是否使用代理")
+    val useProxy: Boolean by value(true)
+
+    @ValueDescription("代理地址（HTTP）")
+    val proxyAddress: String by value("127.0.0.1")
+
+    @ValueDescription("代理端口")
+    val proxyPort: Int by value(10809)
+
+    @ValueDescription("百度翻译APP ID")
+    val baiduAppId: String by value()
+
+    @ValueDescription("百度翻译密钥")
+    val baiduSecretKey: String by value()
+}
