@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.evolvedghost"
-version = "0.0.6"
+version = "0.0.7"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
