@@ -1,7 +1,7 @@
 package com.evolvedghost.function
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.additionalPrompt
-import com.evolvedghost.MiraiNovelaiNaifuConfig.imageWaitTime
+import com.evolvedghost.MainConfig.additionalPrompt
+import com.evolvedghost.MainConfig.imageWaitTime
 import com.evolvedghost.naifu.Naifu
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

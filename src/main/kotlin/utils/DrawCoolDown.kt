@@ -1,6 +1,6 @@
 package com.evolvedghost.utils
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.coolDownTime
+import com.evolvedghost.MainConfig.coolDownTime
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

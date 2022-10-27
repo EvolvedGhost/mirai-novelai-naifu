@@ -1,19 +1,19 @@
 package com.evolvedghost.naifu.data
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig
+import com.evolvedghost.MainConfig
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class SettingVal(
-    var nPrompt: String = MiraiNovelaiNaifuConfig.undesiredContent,
-    var width: Int = MiraiNovelaiNaifuConfig.width,
-    var height: Int = MiraiNovelaiNaifuConfig.height,
-    var scale: Float = MiraiNovelaiNaifuConfig.scale,
-    var sampler: String = MiraiNovelaiNaifuConfig.sampler,
-    var steps: Int = MiraiNovelaiNaifuConfig.steps,
-    var seed: Long = MiraiNovelaiNaifuConfig.seed,
-    var strength: Float = MiraiNovelaiNaifuConfig.strength,
-    var noise: Float = MiraiNovelaiNaifuConfig.noise,
+    var nPrompt: String = MainConfig.undesiredContent,
+    var width: Int = MainConfig.width,
+    var height: Int = MainConfig.height,
+    var scale: Float = MainConfig.scale,
+    var sampler: String = MainConfig.sampler,
+    var steps: Int = MainConfig.steps,
+    var seed: Long = MainConfig.seed,
+    var strength: Float = MainConfig.strength,
+    var noise: Float = MainConfig.noise,
 ) {
     fun set(key: String, value: String?): String {
         return when (key) {

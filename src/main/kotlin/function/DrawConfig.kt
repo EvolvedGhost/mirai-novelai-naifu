@@ -1,6 +1,6 @@
 package com.evolvedghost.function
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.custom
+import com.evolvedghost.MainConfig.custom
 import com.evolvedghost.MiraiNovelaiNaifuData.personalSetting
 import com.evolvedghost.naifu.data.SettingVal
 import com.google.gson.Gson

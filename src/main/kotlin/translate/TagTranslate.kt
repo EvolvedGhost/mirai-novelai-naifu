@@ -1,8 +1,8 @@
 package translate
 
 import com.evolvedghost.MiraiNovelaiNaifu.logger
-import com.evolvedghost.MiraiNovelaiNaifuConfig
-import com.evolvedghost.MiraiNovelaiNaifuConfig.translateTags
+import com.evolvedghost.MainConfig
+import com.evolvedghost.MainConfig.translateTags
 import com.evolvedghost.translate.data.ReturnVal
 import com.evolvedghost.translate.data.TranslateData
 import com.evolvedghost.utils.DebugMode
@@ -84,9 +84,9 @@ class TagTranslate {
                         webWords.joinToString(
                             ","
                         ),
-                MiraiNovelaiNaifuConfig.connectTimeout,
-                MiraiNovelaiNaifuConfig.readTimeout,
-                MiraiNovelaiNaifuConfig.ignoreCertError
+                MainConfig.connectTimeout,
+                MainConfig.readTimeout,
+                MainConfig.ignoreCertError
             ).get().body?.string()
         try {
             val translateData = Gson().fromJson(translateBody, TranslateData::class.java)

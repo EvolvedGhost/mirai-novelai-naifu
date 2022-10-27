@@ -1,10 +1,10 @@
 package com.evolvedghost.naifu
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.apiSrc
-import com.evolvedghost.MiraiNovelaiNaifuConfig.connectTimeout
-import com.evolvedghost.MiraiNovelaiNaifuConfig.ignoreCertError
-import com.evolvedghost.MiraiNovelaiNaifuConfig.readTimeout
-import com.evolvedghost.MiraiNovelaiNaifuConfig.samples
+import com.evolvedghost.MainConfig.apiSrc
+import com.evolvedghost.MainConfig.connectTimeout
+import com.evolvedghost.MainConfig.ignoreCertError
+import com.evolvedghost.MainConfig.readTimeout
+import com.evolvedghost.MainConfig.samples
 import com.evolvedghost.naifu.data.*
 import com.evolvedghost.utils.DebugMode
 import com.evolvedghost.utils.HTTPClient

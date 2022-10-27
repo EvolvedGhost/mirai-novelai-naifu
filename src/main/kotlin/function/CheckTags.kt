@@ -1,6 +1,6 @@
 package com.evolvedghost.function
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.bannedContent
+import com.evolvedghost.MainConfig.bannedContent
 import com.evolvedghost.data.tagTranslate
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.message.data.PlainText

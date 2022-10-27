@@ -1,6 +1,6 @@
 package com.evolvedghost
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.imageWaitTime
+import com.evolvedghost.MainConfig.imageWaitTime
 import com.evolvedghost.function.img2imgAfterWait
 import com.evolvedghost.function.img2imgWaitMap
 import com.evolvedghost.function.initConfig
@@ -52,7 +52,7 @@ object MiraiNovelaiNaifu : KotlinPlugin(
     }
 
     override fun onDisable() {
-        MiraiNovelaiNaifuConfig.save()
+        MainConfig.save()
         MiraiNovelaiNaifuData.save()
         MiraiNovelaiNaifuCommand.unregister()
         logger.info { "Mirai Novelai Naifu已经成功卸载" }

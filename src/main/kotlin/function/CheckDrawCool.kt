@@ -1,6 +1,6 @@
 package com.evolvedghost.function
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.concurrent
+import com.evolvedghost.MainConfig.concurrent
 import com.evolvedghost.utils.DrawCoolDown
 import net.mamoe.mirai.console.command.CommandSender
 

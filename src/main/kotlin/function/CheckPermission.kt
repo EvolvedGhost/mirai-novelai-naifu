@@ -1,10 +1,10 @@
 package com.evolvedghost.function
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.adminMode
-import com.evolvedghost.MiraiNovelaiNaifuConfig.adminSuper
-import com.evolvedghost.MiraiNovelaiNaifuConfig.groupAllow
-import com.evolvedghost.MiraiNovelaiNaifuConfig.personalAllow
-import com.evolvedghost.MiraiNovelaiNaifuConfig.whiteList
+import com.evolvedghost.MainConfig.adminMode
+import com.evolvedghost.MainConfig.adminSuper
+import com.evolvedghost.MainConfig.groupAllow
+import com.evolvedghost.MainConfig.personalAllow
+import com.evolvedghost.MainConfig.whiteList
 import com.evolvedghost.MiraiNovelaiNaifuData.groupPerm
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.console.command.CommandSender

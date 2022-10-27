@@ -2,24 +2,24 @@ package com.evolvedghost.function
 
 import com.evolvedghost.MiraiNovelaiNaifu.logger
 import com.evolvedghost.MiraiNovelaiNaifu.reload
-import com.evolvedghost.MiraiNovelaiNaifuConfig
-import com.evolvedghost.MiraiNovelaiNaifuConfig.concurrent
-import com.evolvedghost.MiraiNovelaiNaifuConfig.height
-import com.evolvedghost.MiraiNovelaiNaifuConfig.noise
-import com.evolvedghost.MiraiNovelaiNaifuConfig.sampler
-import com.evolvedghost.MiraiNovelaiNaifuConfig.samples
-import com.evolvedghost.MiraiNovelaiNaifuConfig.scale
-import com.evolvedghost.MiraiNovelaiNaifuConfig.seed
-import com.evolvedghost.MiraiNovelaiNaifuConfig.steps
-import com.evolvedghost.MiraiNovelaiNaifuConfig.strength
-import com.evolvedghost.MiraiNovelaiNaifuConfig.width
+import com.evolvedghost.MainConfig
+import com.evolvedghost.MainConfig.concurrent
+import com.evolvedghost.MainConfig.height
+import com.evolvedghost.MainConfig.noise
+import com.evolvedghost.MainConfig.sampler
+import com.evolvedghost.MainConfig.samples
+import com.evolvedghost.MainConfig.scale
+import com.evolvedghost.MainConfig.seed
+import com.evolvedghost.MainConfig.steps
+import com.evolvedghost.MainConfig.strength
+import com.evolvedghost.MainConfig.width
 import com.evolvedghost.data.tagTranslate
 import net.mamoe.mirai.utils.info
 
 val samplerSet = setOf("k_euler_ancestral", "k_euler", "k_lms", "plms", "ddim")
 
 fun initConfig() {
-    MiraiNovelaiNaifuConfig.reload()
+    MainConfig.reload()
     if (samples < 1 || samples > 100) {
         logger.info { "samples 数值错误已还原默认值 1" }
         samples = 1

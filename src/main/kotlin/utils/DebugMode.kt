@@ -1,7 +1,7 @@
 package com.evolvedghost.utils
 
 import com.evolvedghost.MiraiNovelaiNaifu.logger
-import com.evolvedghost.MiraiNovelaiNaifuConfig.debug
+import com.evolvedghost.MainConfig.debug
 import com.evolvedghost.naifu.data.PostData
 import com.google.gson.GsonBuilder
 import net.mamoe.mirai.utils.info

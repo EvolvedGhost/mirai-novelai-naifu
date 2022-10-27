@@ -1,6 +1,6 @@
 package com.evolvedghost.function
 
-import com.evolvedghost.MiraiNovelaiNaifuConfig.additionalPrompt
+import com.evolvedghost.MainConfig.additionalPrompt
 import com.evolvedghost.naifu.Naifu
 import net.mamoe.mirai.console.command.CommandContext
 import net.mamoe.mirai.message.data.PlainText
